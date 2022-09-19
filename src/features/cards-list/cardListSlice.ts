@@ -16,17 +16,17 @@ const initialState: CardsState = {
   status: "idle",
 };
 
-export const fetchAllCards = createAsyncThunk(
-  "counter/fetchAll",
-  async (_, { getState }: any) => {
-    if (getState().cards.value.length === 0) {
-      const response = await fetchCards();
-      return response;
-    }
+export const fetchAllCards = createAsyncThunk("counter/fetchAll", async () => {
+  const storedCards = Storage.get("cards");
+  if (!storedCards) {
+    const response = await fetchCards();
 
-    return getState().cards.value;
+    Storage.set("cards", response);
+    return response;
   }
-);
+
+  return storedCards;
+});
 
 export const cardsSlice = createSlice({
   name: "cards",

@@ -19,7 +19,7 @@ function CardList() {
 
   useEffect(() => {
     dispatch(fetchAllCards());
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
